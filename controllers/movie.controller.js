@@ -4,6 +4,7 @@ import {
   getMovieById,
   deleteMovieById,
   updateMovieById,
+  fetchMovies,
 } from "../services/movie.service.js";
 
 import {
@@ -77,6 +78,22 @@ export const deleteMovie = async (req, res) => {
     successResponseBody.message = response?.message;
     return res.status(200).json(successResponseBody);
   } catch (err) {
+    res.status(500).json(errorResponseBody);
+  }
+};
+
+export const getMovie = async (req, res) => {
+  try {
+    const response = await fetchMovies(req.query);
+    if (response.err) {
+      errorResponseBody.err = response.err;
+      return res.status(response.code).json(errorResponseBody);
+    }
+    successResponseBody.data = response?.data;
+    successResponseBody.message = response?.message;
+    return res.status(200).json(successResponseBody);
+  } catch (error) {
+    errorResponseBody.err = error;
     res.status(500).json(errorResponseBody);
   }
 };

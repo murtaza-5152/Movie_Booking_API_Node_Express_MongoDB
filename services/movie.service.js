@@ -69,3 +69,21 @@ export const deleteMovieById = async (id) => {
     data: movie,
   };
 };
+
+export const fetchMovies = async (filter) => {
+  let query = {};
+  if (filter.name) {
+    query.name = filter.name;
+  }
+  let movie = await Movie.findOne(query);
+  if (!movie) {
+    return {
+      err: "Movie which is queried is not available",
+      code: 404,
+    };
+  } else {
+    return {
+      data: movie,
+    };
+  }
+};
