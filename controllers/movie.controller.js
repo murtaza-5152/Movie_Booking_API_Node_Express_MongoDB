@@ -1,13 +1,15 @@
-import { response } from "express";
-import {
-  successResponseBody,
-  errorResponseBody,
-} from "../utils/reponseBody.js";
+import { Schema } from "mongoose";
 import {
   createNewMovie,
   getMovieById,
   deleteMovieById,
+  updateMovieById,
 } from "../services/movie.service.js";
+
+import {
+  successResponseBody,
+  errorResponseBody,
+} from "../utils/reponseBody.js";
 
 /**
  *
@@ -46,6 +48,24 @@ export const getMovieDetails = async (req, res) => {
   }
 };
 
+export const updateMovie = async (req, res) => {
+  try {
+    const response = await updateMovieById(req?.params?.id, req?.body);
+    console.log("response", response);
+    if (response.err) {
+      errorResponseBody.err = response.err;
+      errorResponseBody.message = `The updates we are trying to apply doesn't validate the Schemas`;
+      return err.status(response.code).json(errorResponseBody);
+    }
+    successResponseBody.data = response?.data;
+    successResponseBody.message = response?.message;
+    return res.status(200).json(successResponseBody);
+  } catch (err) {
+    console.log("error in controller", err);
+    res.status(500).json(errorResponseBody);
+  }
+};
+
 export const deleteMovie = async (req, res) => {
   try {
     const response = await deleteMovieById(req?.params?.id);
@@ -57,7 +77,6 @@ export const deleteMovie = async (req, res) => {
     successResponseBody.message = response?.message;
     return res.status(200).json(successResponseBody);
   } catch (err) {
-    errorResponseBody.message = response?.message;
-    res.status(response.code).json(errorResponseBody);
+    res.status(500).json(errorResponseBody);
   }
 };

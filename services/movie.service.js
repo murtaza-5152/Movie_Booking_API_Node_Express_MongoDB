@@ -29,6 +29,33 @@ export const getMovieById = async (id) => {
   };
 };
 
+export const updateMovieById = async (id, body) => {
+  try {
+    const movie = await Movie.findByIdAndUpdate(id, body, {
+      new: true,
+      runValidators: true,
+    });
+    return {
+      message: `Movie Updated Successfully.`,
+      data: movie,
+    };
+  } catch (error) {
+    if (error.name == "ValidationError") {
+      let err = {};
+      Object.keys(error.errors).forEach((key) => {
+        err[key] = error.errors[key].message;
+      });
+      console.log(err);
+      return {
+        err: err,
+        code: 422,
+      };
+    } else {
+      throw error;
+    }
+  }
+};
+
 export const deleteMovieById = async (id) => {
   const movie = await Movie.findByIdAndDelete(id);
   if (!movie) {
