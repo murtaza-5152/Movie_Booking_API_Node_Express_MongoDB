@@ -1,9 +1,4 @@
-const badRequestResponse = {
-  success: false,
-  err: "",
-  data: {},
-  message: "Malformed Request | Bad Request",
-};
+import { badRequestResponse } from "../utils/reponseBody.js";
 
 export const createMovieValidation = async (req, res, next) => {
   if (!req.body.name) {

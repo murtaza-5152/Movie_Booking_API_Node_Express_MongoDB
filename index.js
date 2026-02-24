@@ -2,6 +2,7 @@ import express from "express";
 import env from "dotenv/config";
 import mongoose from "mongoose";
 import { routes as MovieRoutes } from "./routes/movie.routes.js";
+import { routes as TheaterRoutes } from "./routes/theater.routes.js";
 const app = express(); // app is an express object.
 // env.config();
 /*
@@ -14,6 +15,7 @@ If the incoming request body is JSON, parse it and put it inside req.body.
  */
 app.use(express.json());
 MovieRoutes(app); // invoking the MovieRoutes
+TheaterRoutes(app); // invoking the TheaterRoutes
 
 app.listen(process.env.PORT, async () => {
   // this callback gets executed, once we successfully start the server on given port.
