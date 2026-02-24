@@ -70,3 +70,37 @@ export const deleteTheater = async (id) => {
     };
   }
 };
+
+export const updateMoviesInTheaters = async (theaterId, movieIds, insert) => {
+  const theater = await Theater.findById(theaterId);
+  if (!theater) {
+    return {
+      err: "No Such Theater found with the given id",
+      code: 404,
+    };
+  }
+  if (insert) {
+    // we need to add movies
+    movieIds.forEach((id) => {
+      console.log("CONSOLE", theater.movies.includes(id));
+      if (!theater.movies.includes(id)) {
+        console.log("TREU");
+        theater.movies.push(id);
+      } else {
+        return {
+          err: "Movie is already present in the theater",
+          code: 4040,
+        };
+      }
+    });
+  } else {
+    // we need to remove movie
+    let savedMovieIds = theater.movies;
+    movieIds.forEach((id) => {
+      savedMovieIds = savedMovieIds.filter((smi) => smi === id);
+    });
+    theater.movies = savedMovieIds;
+  }
+  await theater.save();
+  return theater.populate("movies"); // collection name
+};

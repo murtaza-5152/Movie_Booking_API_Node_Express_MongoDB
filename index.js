@@ -6,7 +6,7 @@ import { routes as MovieRoutes } from "./routes/movie.routes.js";
 import { routes as TheaterRoutes } from "./routes/theater.routes.js";
 
 const app = express(); // app is an express object.
-env.config();
+//env.config();
 /*
 This parses form data (from HTML forms).
 */

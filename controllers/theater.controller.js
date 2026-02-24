@@ -3,6 +3,7 @@ import {
   getTheater,
   updateTheater,
   deleteTheater,
+  updateMoviesInTheaters,
 } from "../services/theater.service.js";
 import {
   successResponseBody,
@@ -70,6 +71,27 @@ export const deleteTheaterById = async (req, res) => {
     successResponseBody.data = response.data;
     return res.status(200).json(successResponseBody);
   } catch (error) {
+    errorResponseBody.err = error;
+    return res.status(500).json(errorResponseBody);
+  }
+};
+
+export const updateMovies = async (req, res) => {
+  try {
+    const response = await updateMoviesInTheaters(
+      req.params.id,
+      req.body.movieIds,
+      req.body.insert,
+    );
+    if (response.err) {
+      errorResponseBody.err = response.err;
+      return res.status(response.code).json(errorResponseBody);
+    }
+    successResponseBody.data = response;
+    successResponseBody.message = "Successfully updated movies in the theater";
+    return res.status(200).json(successResponseBody);
+  } catch (error) {
+    console.log(error);
     errorResponseBody.err = error;
     return res.status(500).json(errorResponseBody);
   }
