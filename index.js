@@ -1,10 +1,12 @@
 import express from "express";
 import env from "dotenv/config";
 import mongoose from "mongoose";
+
 import { routes as MovieRoutes } from "./routes/movie.routes.js";
 import { routes as TheaterRoutes } from "./routes/theater.routes.js";
+
 const app = express(); // app is an express object.
-// env.config();
+env.config();
 /*
 This parses form data (from HTML forms).
 */
@@ -14,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 If the incoming request body is JSON, parse it and put it inside req.body.
  */
 app.use(express.json());
+
 MovieRoutes(app); // invoking the MovieRoutes
 TheaterRoutes(app); // invoking the TheaterRoutes
 

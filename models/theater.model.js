@@ -20,6 +20,10 @@ const theaterSchema = new mongoose.Schema(
     address: {
       type: String,
     },
+    movies: {
+      type: [mongoose.Schema.Types.ObjectId], // used to associated the movies with theater
+      ref: "Movie",
+    },
   },
   { timestamps: true },
 );
