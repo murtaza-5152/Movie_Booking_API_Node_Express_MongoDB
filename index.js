@@ -1,9 +1,9 @@
-import express from "express";
-import env from "dotenv/config";
-import mongoose from "mongoose";
+import express from 'express';
+import env from 'dotenv/config';
+import mongoose from 'mongoose';
 
-import { routes as MovieRoutes } from "./routes/movie.routes.js";
-import { routes as TheaterRoutes } from "./routes/theater.routes.js";
+import { routes as MovieRoutes } from './routes/movie.routes.js';
+import { routes as TheaterRoutes } from './routes/theater.routes.js';
 
 const app = express(); // app is an express object.
 //env.config();
@@ -20,14 +20,15 @@ app.use(express.json());
 MovieRoutes(app); // invoking the MovieRoutes
 TheaterRoutes(app); // invoking the TheaterRoutes
 
+mongoose.set('debug', true);
 app.listen(process.env.PORT, async () => {
   // this callback gets executed, once we successfully start the server on given port.
   console.log(`Server is Started on port ${process.env.PORT}`);
 
   try {
     await mongoose.connect(process.env.DB_URL);
-    console.log("Database Connected Successfully");
+    console.log('Database Connected Successfully');
   } catch (err) {
-    console.log("Not be able to connect to Database : ", err);
+    console.log('Not be able to connect to Database : ', err);
   }
 });

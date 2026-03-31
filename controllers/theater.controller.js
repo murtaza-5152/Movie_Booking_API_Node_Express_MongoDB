@@ -4,11 +4,13 @@ import {
   updateTheater,
   deleteTheater,
   updateMoviesInTheaters,
-} from "../services/theater.service.js";
+  getAllTheaters,
+  getMoviesInTheater,
+} from '../services/theater.service.js';
 import {
   successResponseBody,
   errorResponseBody,
-} from "../utils/reponseBody.js";
+} from '../utils/reponseBody.js';
 
 export const createNewTheater = async (req, res) => {
   try {
@@ -17,7 +19,7 @@ export const createNewTheater = async (req, res) => {
       errorResponseBody.message = response.err;
       return res.status(response.code).json(errorResponseBody);
     }
-    console.log("Response", response);
+    console.log('Response', response);
     successResponseBody.message = response.message;
     successResponseBody.data = response.data;
     return res.status(200).json(successResponseBody);
@@ -36,7 +38,7 @@ export const getTheaterById = async (req, res) => {
     }
     successResponseBody.message = response.message;
     successResponseBody.data = response.data;
-    console.log("Response", response);
+    console.log('Response', response);
     return res.status(200).json(successResponseBody);
   } catch (error) {
     errorResponseBody.err = error;
@@ -88,11 +90,39 @@ export const updateMovies = async (req, res) => {
       return res.status(response.code).json(errorResponseBody);
     }
     successResponseBody.data = response;
-    successResponseBody.message = "Successfully updated movies in the theater";
+    successResponseBody.message = 'Successfully updated movies in the theater';
     return res.status(200).json(successResponseBody);
   } catch (error) {
     console.log(error);
     errorResponseBody.err = error;
+    return res.status(500).json(errorResponseBody);
+  }
+};
+
+export const getAllTheatersByCityOrPincode = async (req, res) => {
+  try {
+    const response = await getAllTheaters(req?.query);
+    successResponseBody.message = 'Successfully Fetched all theaters';
+    successResponseBody.data = response;
+    return res.status(200).json(successResponseBody);
+  } catch (error) {
+    errorResponseBody.err = error;
+    return res.status(500).json(errorResponseBody);
+  }
+};
+
+export const getMovies = async (req, res) => {
+  try {
+    const response = await getMoviesInTheater(req?.params?.id);
+    if (response.err) {
+      errorResponseBody.err = response.err;
+      return res.status(response.code).json(errorResponseBody);
+    }
+    successResponseBody.data = response;
+    successResponseBody.message = 'Successfully Fetched Movies in the theater';
+    return res.status(200).json(successResponseBody);
+  } catch (error) {
+    errorResponseBody.err = error?.message;
     return res.status(500).json(errorResponseBody);
   }
 };
