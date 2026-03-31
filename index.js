@@ -1,5 +1,5 @@
 import express from 'express';
-import env from 'dotenv/config';
+import env from 'dotenv';
 import mongoose from 'mongoose';
 
 import { routes as AuthRoutes } from './routes/auth.routes.js';
@@ -7,7 +7,7 @@ import { routes as MovieRoutes } from './routes/movie.routes.js';
 import { routes as TheaterRoutes } from './routes/theater.routes.js';
 
 const app = express(); // app is an express object.
-//env.config();
+env.config();
 /*
 This parses form data (from HTML forms).
 */

@@ -15,3 +15,18 @@ export const CreateUser = async (data) => {
     throw error;
   }
 };
+
+export const getUserByEmail = async (email) => {
+  try {
+    const response = await User.findOne({ email: email });
+    if (!response) {
+      throw {
+        err: 'No User Found for the given email id',
+        code: 404,
+      };
+    }
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
