@@ -1,18 +1,18 @@
 export var successResponseBody = {
-  message: "",
+  message: '',
   success: true,
   data: {},
 };
 
 export var errorResponseBody = {
-  message: "Internal Server Error !!",
+  message: 'Internal Server Error !!',
   success: false,
   err: {},
 };
 
-export const badRequestResponse = {
+export var badRequestResponse = {
   success: false,
-  err: "",
+  err: '',
   data: {},
-  message: "Malformed Request | Bad Request",
+  message: 'Malformed Request | Bad Request',
 };

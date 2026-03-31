@@ -2,6 +2,7 @@ import express from 'express';
 import env from 'dotenv/config';
 import mongoose from 'mongoose';
 
+import { routes as AuthRoutes } from './routes/auth.routes.js';
 import { routes as MovieRoutes } from './routes/movie.routes.js';
 import { routes as TheaterRoutes } from './routes/theater.routes.js';
 
@@ -17,6 +18,7 @@ If the incoming request body is JSON, parse it and put it inside req.body.
  */
 app.use(express.json());
 
+AuthRoutes(app); // invoking the AuthRoutes
 MovieRoutes(app); // invoking the MovieRoutes
 TheaterRoutes(app); // invoking the TheaterRoutes
 
